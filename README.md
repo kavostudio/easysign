@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="Resources/AppIcon.icon/Assets/icon.png" alt="EasySign logo" width="96" height="96">
+
 # EasySign
 
 ### A little more control over Apple Mail.
@@ -58,3 +60,5 @@ Tested on Apple silicon with macOS 26.5.2 and Mail 16.0. Intel and macOS 14 runt
 ---
 
 [Build, use & recovery](docs/GUIDE.md) · [Release process](DISTRIBUTION.md) · [Report an issue](https://github.com/kavostudio/easysign/issues)
+
+Licensed under the [GNU AGPL v3.0](LICENSE). Third-party components retain their [respective licenses](Resources/Sparkle-LICENSE.txt).
