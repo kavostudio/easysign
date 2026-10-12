@@ -29,7 +29,7 @@ Paste or import HTML, preview it, and apply it to an existing Mail signature. Ke
 
 ## Get started
 
-**[Download EasySign 0.1.0 for Mac](https://github.com/kavostudio/easysign/releases/download/v0.1.0/EasySign-0.1.0.dmg)**
+**[Download EasySign 0.1.1 for Mac](https://github.com/kavostudio/easysign/releases/download/v0.1.1/EasySign-0.1.1.dmg)**
 
 Open the signed, notarized DMG and drag EasySign into Applications. This is a preview release for macOS 14 or later, with Apple silicon and Intel support.
 
