@@ -1,0 +1,27 @@
+.build/
+DerivedData/
+.DS_Store
+xcuserdata/
+*.xcuserstate
+Distribution/
+
+# Local agent guidance and private verification notes
+.agents/
+AGENTS.md
+SENDER-VERIFICATION.md
+UI-VERIFICATION.md
+VERIFICATION.md
+*.p12
+*.p8
+*.key
+.env*
+
+# Private local data and signing material
+.private/
+*.cer
+*.certSigningRequest
+*.mobileprovision
+*.provisionprofile
+*.keychain
+*.keychain-db
+*.mailsignature
