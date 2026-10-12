@@ -114,7 +114,7 @@ struct ContentView: View {
             }
         }
         .onChange(of: model.html) { _, _ in if model.dirty { model.successfulOperation = nil } }
-        .alert("Couldn’t complete the operation", isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) {
+        .alert("Couldn’t complete the operation", isPresented: Binding(get: { model.error != nil && !model.showingSetup }, set: { if !$0 { model.error = nil } })) {
             Button("OK") { model.error = nil }
             if model.mailRunning { Button("Quit Mail Normally") { model.error = nil; model.quitMail() } }
         } message: { Text(model.error ?? "") }
@@ -127,6 +127,7 @@ struct ContentView: View {
         .alert("Mail action failed", isPresented: Binding(get: { profiles.error != nil }, set: { if !$0 { profiles.error = nil } })) {
             Button("OK") { profiles.error = nil }
         } message: { Text(profiles.error ?? "") }
+        .sheet(isPresented: $model.showingSetup) { SetupView(model: model, profiles: profiles) }
         .sheet(isPresented: $model.showingBackups) { BackupPicker(model: model) }
     }
 

@@ -25,11 +25,12 @@ struct FixtureWindow {
         let fixtureProfiles = ProfileModel(supportDirectory: root)
         fixtureProfiles.save(IdentityProfile(label: "Studio", name: "Alex Morgan | Studio", email: "alex@example.com"))
         fixtureProfiles.save(IdentityProfile(label: "Personal", name: "Alex Morgan", email: "alex@example.com"))
-        let model = AppModel()
+        let model = AppModel(supportDirectory: root)
         if !arguments.contains("--empty") {
             model.entries = entries
             model.select(entries[arguments.contains("--long-title") ? 2 : 0].url)
         } else { model.accessDenied = true }
+        if arguments.contains("--setup") { model.showingSetup = true }
         let window = NSWindow(contentRect: NSRect(x: 80, y: 80, width: arguments.contains("--compact") ? 920 : 1240, height: arguments.contains("--compact") ? 620 : 790), styleMask: [.titled, .closable, .resizable], backing: .buffered, defer: false)
         window.title = "EasySign — temporary UI fixture"
         window.appearance = NSAppearance(named: arguments.contains("--dark") ? .darkAqua : .aqua)

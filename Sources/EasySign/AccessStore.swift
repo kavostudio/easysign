@@ -8,8 +8,8 @@ final class AccessStore {
     private var bookmarks: [Data] = []
     private var preferences: URL { support.appendingPathComponent("Access.plist") }
 
-    init() {
-        support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("EasySign", isDirectory: true)
+    init(supportDirectory: URL? = nil) {
+        support = supportDirectory ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("EasySign", isDirectory: true)
     }
 
     func restore() throws -> [URL] {

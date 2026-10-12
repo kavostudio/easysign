@@ -22,6 +22,12 @@ open DerivedData/Build/Products/Debug/EasySign.app
 
 Use `arch=x86_64` on Intel; that runtime has not been tested.
 
+## First-run setup
+
+EasySign opens a two-step setup sheet on first launch. Create a signature in Mail, then use **Choose Folder…** or **Open Signature File…** to grant access. If several Mail stores are found, choose the correct folder explicitly. An empty folder offers Refresh; denied access offers Retry and instructions.
+
+The optional **Connect Mail** step reads configured addresses and requests Automation permission only after you click it. You can skip either step and reopen setup from **Help → Set Up EasySign…**. Completion is saved in `~/Library/Application Support/EasySign/Setup.plist`. Setup never changes a signature or sends a message.
+
 ## Use
 
 - Select an existing signature, or use **Open Signature File…**.
@@ -178,3 +184,18 @@ The feed offers signed, notarized releases. Version 0.1.0 is the first public pr
 ## Documentation screenshot
 
 The README screenshot uses the production SwiftUI views through `Tests/WindowCheck/WindowCheck.swift --screenshot`, with temporary files and `Examples/studio-signature.html`. It contains fictional sample data. Compile the fixture using its absolute source path so its example-file lookup resolves correctly; no real Mail signature is needed.
+
+### Setup regression check
+
+The setup fixture uses temporary files and covers first-run presentation, completion persistence, saved folder access, unsaved-edit protection, retry, and failed preference writes:
+
+```sh
+swiftc -parse-as-library -I .build/arm64-apple-macosx/debug/Modules \
+  Sources/EasySign/AppModel.swift Sources/EasySign/AccessStore.swift \
+  Tests/SetupCheck/SetupCheck.swift \
+  .build/arm64-apple-macosx/debug/EasySignCore.build/*.swift.o \
+  -o /tmp/EasySignSetupCheck
+/tmp/EasySignSetupCheck
+```
+
+`Tests/WindowCheck/WindowCheck.swift --setup` presents the setup sheet with temporary data for UI checks. Actual macOS permission prompts must also be verified in the signed app.

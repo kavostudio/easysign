@@ -24,6 +24,10 @@ struct EasySignApp: App {
                 ))
                 Divider()
             }
+            CommandGroup(after: .help) {
+                Button("Set Up EasySign…") { model.openSetup() }
+                    .disabled(model.busy || profiles.busy || model.showingSetup)
+            }
             CommandGroup(replacing: .newItem) { }
             CommandGroup(replacing: .saveItem) {
                 Button("Apply to Mail") { Task { await model.apply() } }

@@ -25,7 +25,27 @@ final class AppModel {
     var lastApply: Date?
     var allowUnencodedQuotedPrintable = false
     var removeQuarantine = false
-    let access = AccessStore()
+    let access: AccessStore
+    var showingSetup = false
+    private var setupURL: URL { access.support.appendingPathComponent("Setup.plist") }
+
+    init(supportDirectory: URL? = nil) {
+        access = AccessStore(supportDirectory: supportDirectory)
+    }
+
+    func openSetup() {
+        guard !busy, confirmDiscard() else { return }
+        discardEdits()
+        showingSetup = true
+    }
+
+    func finishSetup() {
+        do {
+            try FileManager.default.createDirectory(at: access.support, withIntermediateDirectories: true, attributes: [.posixPermissions: 0o700])
+            try PropertyListEncoder().encode(["completed": true]).write(to: setupURL, options: .atomic)
+            showingSetup = false
+        } catch { self.error = "Couldn’t save setup. \(error.localizedDescription)" }
+    }
     var backupStore: BackupStore { BackupStore(directory: access.support.appendingPathComponent("Backups", isDirectory: true)) }
     var dirty: Bool { html != loadedHTML }
     var mailRunning = !NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.mail").isEmpty
@@ -38,7 +58,14 @@ final class AppModel {
     func start() {
         guard !started else { return }
         started = true
-        discoverSavedAccess()
+        let completed = (try? Data(contentsOf: setupURL)).flatMap {
+            try? PropertyListDecoder().decode([String: Bool].self, from: $0)
+        }?["completed"] == true
+        showingSetup = !completed
+        // First-run access is requested only after the user chooses a folder.
+        if completed || FileManager.default.fileExists(atPath: access.support.appendingPathComponent("Access.plist").path) {
+            discoverSavedAccess()
+        }
     }
 
     private func discoverSavedAccess() {
@@ -58,7 +85,7 @@ final class AppModel {
         if root.lastPathComponent == "Signatures" || children.contains(where: { $0.pathExtension == "mailsignature" }) {
             directories = [root]
         } else { directories = try SignatureDiscovery.candidates(in: root) }
-        accessDenied = false
+        accessDenied = false; error = nil
         if directories.count == 1 { try loadDirectory(directories[0]) }
         else {
             directory = nil; entries = []
