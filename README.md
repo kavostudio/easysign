@@ -29,7 +29,11 @@ Paste or import HTML, preview it, and apply it to an existing Mail signature. Ke
 
 ## Get started
 
-**Preview release.** The first notarized download is being prepared. For now, build locally:
+**[Download EasySign 0.1.0 for Mac](https://github.com/kavostudio/easysign/releases/download/v0.1.0/EasySign-0.1.0.dmg)**
+
+Open the signed, notarized DMG and drag EasySign into Applications. This is a preview release for macOS 14 or later, with Apple silicon and Intel support.
+
+To build from source:
 
 1. Open `EasySign.xcodeproj` in Xcode and resolve the Sparkle package.
 2. Select your signing team and an Apple Development or Developer ID certificate.

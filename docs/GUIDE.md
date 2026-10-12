@@ -173,7 +173,7 @@ Source and release downloads: https://github.com/kavostudio/easysign
 
 HTTPS update feed: https://kavostudio.github.io/easysign/appcast.xml
 
-The feed intentionally contains no releases until a signed, notarized build is ready. Builds that predate Sparkle require one manual installation to gain automatic-update support. See [DISTRIBUTION.md](../DISTRIBUTION.md) for the release process and key management. Sparkle's license is included in Resources/Sparkle-LICENSE.txt and in the app bundle.
+The feed offers signed, notarized releases. Version 0.1.0 is the first public preview. Builds that predate Sparkle require one manual installation to gain automatic-update support. See [DISTRIBUTION.md](../DISTRIBUTION.md) for the release process and key management. Sparkle's license is included in Resources/Sparkle-LICENSE.txt and in the app bundle.
 
 ## Documentation screenshot
 

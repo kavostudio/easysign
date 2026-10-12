@@ -1,9 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
-  <channel>
-    <title>EasySign Updates</title>
-    <link>https://github.com/kavostudio/easysign/releases</link>
-    <description>Signed EasySign updates for macOS.</description>
-    <language>en</language>
-  </channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>EasySign Updates</title>
+        <link>https://github.com/kavostudio/easysign/releases</link>
+        <description>Signed EasySign updates for macOS.</description>
+        <language>en</language>
+        <item>
+            <title>0.1.0</title>
+            <pubDate>Mon, 12 Oct 2026 11:23:10 +0200</pubDate>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>First public preview of EasySign for macOS.</p>
+<ul><li>Edit and preview custom HTML signatures for Apple Mail.</li><li>Verified backups, restore, protected headers, and file locking.</li><li>Sender profiles with new-message and reply actions.</li><li>Optional signed updates through Sparkle.</li></ul>
+<p>Requires macOS 14 or later. Universal Apple silicon and Intel build.</p>
+<p>Preview limitations: sender-name delivery can be inconsistent; verify received From headers. iCloud signature synchronization and Intel runtime behavior need further testing.</p>
+]]></description>
+            <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.0/EasySign-0.1.0.dmg" length="3705239" type="application/octet-stream" sparkle:edSignature="0+zYx77lxJb40dV6i1AhiVjEotROsmcvG9A3UbOfXkC+bYxLE3RFX4OyFYbJhj8hElPz7ktz3XZvsRs4fG74Dg=="/>
+        </item>
+    </channel>
 </rss>
