@@ -1,6 +1,6 @@
 # Release and update publishing
 
-EasySign 0.1.2 (build 4) targets macOS 14 or later. The public source repository is `kavostudio/easysign`. GitHub Releases hosts downloadable archives; GitHub Pages serves `docs/appcast.xml`. Version 0.1.2 is published as a signed, notarized preview release.
+EasySign 0.1.3 (build 5) targets macOS 14 or later. The public source repository is `kavostudio/easysign`. GitHub Releases hosts downloadable archives; GitHub Pages serves `docs/appcast.xml`. Version 0.1.3 is published as a signed, notarized preview release.
 
 ## Build and signing
 
