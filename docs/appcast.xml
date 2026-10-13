@@ -6,6 +6,18 @@
         <description>Signed EasySign updates for macOS.</description>
         <language>en</language>
         <item>
+            <title>0.1.4</title>
+            <pubDate>Tue, 13 Oct 2026 11:23:41 +0200</pubDate>
+            <sparkle:version>6</sparkle:version>
+            <sparkle:shortVersionString>0.1.4</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>EasySign 0.1.4 adds Check Setup and expands Recent drafts by default.</p>
+<ul><li>Check signature-folder access, signature compatibility, external changes, lock state, and Mail Automation permission.</li><li>Get clear next steps without losing unsaved HTML.</li><li>Recent drafts starts expanded and can still be collapsed.</li></ul>
+<p>Setup checks are read-only. Backup creation and installation are still verified separately during Apply. This remains a preview release.</p>
+]]></description>
+            <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.4/EasySign-0.1.4.dmg" length="3840757" type="application/octet-stream" sparkle:edSignature="geoIysHBYfMkLZ+ik3KgGgiZJZqB+jecY1UMHQ4g2GJnBfAPtRH8cGXCO8QbUZHppxKbybM939yUMNfteN/NDg=="/>
+        </item>
+        <item>
             <title>0.1.3</title>
             <pubDate>Tue, 13 Oct 2026 10:30:12 +0200</pubDate>
             <sparkle:version>5</sparkle:version>
@@ -28,18 +40,6 @@
 <p>This remains a preview release.</p>
 ]]></description>
             <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.2/EasySign-0.1.2.dmg" length="3769907" type="application/octet-stream" sparkle:edSignature="Cd2JgaC/uxZ6MxriwAVtOAxT6BEjqFl5P7yMv9SQ76gMuZzbcpzLlyu7LWW6KyG3Zz6uBa4AVPKTpPfnlhIAAg=="/>
-        </item>
-        <item>
-            <title>0.1.1</title>
-            <pubDate>Mon, 12 Oct 2026 12:08:51 +0200</pubDate>
-            <sparkle:version>3</sparkle:version>
-            <sparkle:shortVersionString>0.1.1</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>EasySign 0.1.1 adds a simple first-run setup.</p>
-<ul><li>Choose your signatures folder, with permission help and Retry.</li><li>Optionally connect Mail for sender profiles.</li><li>Skip setup and reopen it from Help → Set Up EasySign.</li></ul>
-<p>This remains a preview release. Sender-name delivery, iCloud synchronization, and older macOS compatibility have known limitations. See the user guide before relying on profiles.</p>
-]]></description>
-            <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.1/EasySign-0.1.1.dmg" length="3768792" type="application/octet-stream" sparkle:edSignature="gKijFhuPZfB+XJZu22cCoNROCzPDwQxA67eWTs9tEmrSMRgCnYkU2Bwqbp8vGQcrLAPVTuMKBtV+b7iTPE6jAA=="/>
         </item>
     </channel>
 </rss>
