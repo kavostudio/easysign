@@ -6,6 +6,18 @@
         <description>Signed EasySign updates for macOS.</description>
         <language>en</language>
         <item>
+            <title>0.1.2</title>
+            <pubDate>Tue, 13 Oct 2026 10:19:19 +0200</pubDate>
+            <sparkle:version>4</sparkle:version>
+            <sparkle:shortVersionString>0.1.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Fixes a backup verification failure when applying HTML signatures with inherited file permissions.</p>
+<ul><li>Preserves original access rules in backups and installed signatures.</li><li>Keeps verification, file locking, and rollback protections intact.</li></ul>
+<p>This remains a preview release.</p>
+]]></description>
+            <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.2/EasySign-0.1.2.dmg" length="3769907" type="application/octet-stream" sparkle:edSignature="Cd2JgaC/uxZ6MxriwAVtOAxT6BEjqFl5P7yMv9SQ76gMuZzbcpzLlyu7LWW6KyG3Zz6uBa4AVPKTpPfnlhIAAg=="/>
+        </item>
+        <item>
             <title>0.1.1</title>
             <pubDate>Mon, 12 Oct 2026 12:08:51 +0200</pubDate>
             <sparkle:version>3</sparkle:version>
