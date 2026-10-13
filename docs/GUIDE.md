@@ -199,3 +199,15 @@ swiftc -parse-as-library -I .build/arm64-apple-macosx/debug/Modules \
 ```
 
 `Tests/WindowCheck/WindowCheck.swift --setup` presents the setup sheet with temporary data for UI checks. Actual macOS permission prompts must also be verified in the signed app.
+
+### Check setup
+
+Choose **Help → Check Setup…**, or **Check Setup…** in the window’s More menu.
+The read-only check reports folder readability, signature format and edited HTML compatibility,
+external file changes, lock state, and Mail Automation permission when Mail is running.
+Unsaved HTML stays in the editor. Choose **Connect Mail** to explicitly open Mail and test account access;
+macOS may ask for Automation permission. Folder selection and reload retain the usual discard confirmation.
+
+These checks do not prove that backups or replacement writes will succeed. Apply still verifies the backup,
+checks that Mail is closed, verifies the replacement, and locks the file. No test signature is installed by the check.
+Use `Tests/WindowCheck/WindowCheck.swift --check-setup` for a temporary-data UI fixture.

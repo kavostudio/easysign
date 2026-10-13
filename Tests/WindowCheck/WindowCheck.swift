@@ -30,6 +30,7 @@ struct FixtureWindow {
             model.entries = entries
             model.select(entries[arguments.contains("--long-title") ? 2 : 0].url)
         } else { model.accessDenied = true }
+        if arguments.contains("--check-setup") { model.showingSetupCheck = true }
         if arguments.contains("--setup") { model.showingSetup = true }
         let window = NSWindow(contentRect: NSRect(x: 80, y: 80, width: arguments.contains("--compact") ? 920 : 1240, height: arguments.contains("--compact") ? 620 : 790), styleMask: [.titled, .closable, .resizable], backing: .buffered, defer: false)
         window.title = "EasySign — temporary UI fixture"

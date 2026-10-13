@@ -25,6 +25,8 @@ struct EasySignApp: App {
                 Divider()
             }
             CommandGroup(after: .help) {
+                Button("Check Setup…") { model.showingSetupCheck = true }
+                    .disabled(model.busy || profiles.busy || model.showingSetup || model.showingSetupCheck)
                 Button("Set Up EasySign…") { model.openSetup() }
                     .disabled(model.busy || profiles.busy || model.showingSetup)
             }

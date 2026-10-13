@@ -291,6 +291,7 @@ struct DraftStatus: View {
 
 struct ProfileMenu: View {
     @Bindable var model: ProfileModel
+    @State private var recentDraftsExpanded = true
     var checkForUpdates: (() -> Void)? = nil
     var canCheckForUpdates = false
     @Environment(\.openWindow) private var openWindow
@@ -360,7 +361,7 @@ struct ProfileMenu: View {
             }
             if !model.drafts.isEmpty {
                 Divider()
-                DisclosureGroup("Recent drafts") {
+                DisclosureGroup("Recent drafts", isExpanded: $recentDraftsExpanded) {
                     ScrollView { DraftStatus(model: model).padding(.top, 8) }.frame(maxHeight: 180)
                 }.font(.callout).padding(16)
             }

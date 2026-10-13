@@ -27,6 +27,7 @@ final class AppModel {
     var removeQuarantine = false
     let access: AccessStore
     var showingSetup = false
+    var showingSetupCheck = false
     private var setupURL: URL { access.support.appendingPathComponent("Setup.plist") }
 
     init(supportDirectory: URL? = nil) {
