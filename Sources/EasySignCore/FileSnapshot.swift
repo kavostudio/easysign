@@ -112,8 +112,25 @@ func copyCompleteFile(from source: URL, to destination: URL) throws {
         throw posixError("Copy file and metadata")
     }
     try setFlags(original.flags & ~UInt32(UF_IMMUTABLE), at: destination)
+    try restoreACL(original, at: destination)
     try restoreAttributes(original, at: destination)
     try restoreDates(original, at: destination)
+}
+
+/// copyfile recomputes inherited ACL entries for the destination directory.
+/// Backups and staged replacements must retain the source's exact access rules.
+func restoreACL(_ metadata: FileMetadata, at destination: URL) throws {
+    let permissions: acl_t?
+    if let text = metadata.acl {
+        permissions = acl_from_text(text)
+    } else {
+        permissions = acl_init(0)
+    }
+    guard let permissions else { throw posixError("Prepare original access rules") }
+    defer { acl_free(UnsafeMutableRawPointer(permissions)) }
+    guard acl_set_file(destination.path, ACL_TYPE_EXTENDED, permissions) == 0 else {
+        throw posixError("Preserve original access rules")
+    }
 }
 
 /// copyfile can alter quarantine flags. Restore exact xattr bytes, including quarantine, before verification.

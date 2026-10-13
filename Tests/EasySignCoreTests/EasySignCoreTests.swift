@@ -27,6 +27,63 @@ final class EasySignCoreTests: XCTestCase {
         return (root, try FileSnapshot(url: file), BackupStore(directory: root.appendingPathComponent("Backups")))
     }
 
+    private func addFixtureACL(at url: URL, permissions: String) throws {
+        let command = Process()
+        command.executableURL = URL(fileURLWithPath: "/bin/chmod")
+        command.arguments = ["+a", "user:\(NSUserName()) allow \(permissions)", url.path]
+        try command.run()
+        command.waitUntilExit()
+        XCTAssertEqual(command.terminationStatus, 0)
+    }
+
+    func testBackupPreservesInheritedACLForEmptySignature() throws {
+        for locked in [false, true] {
+            let (_, original, backups) = try fixture()
+            try document("").write(to: original.url)
+            try addFixtureACL(at: original.url, permissions: "read,write,readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,inherited")
+            if locked { try setFlags(UInt32(UF_IMMUTABLE), at: original.url) }
+            let loaded = try FileSnapshot(url: original.url)
+            let writer = SignatureWriter(backups: backups, requireMailClosed: {})
+            let record = try writer.apply(html: "<b>Hello Ž</b>", to: loaded)
+            XCTAssertEqual(try backups.verify(record).metadata.acl, loaded.metadata.acl)
+            let applied = try FileSnapshot(url: original.url)
+            XCTAssertEqual(applied.metadata.acl, loaded.metadata.acl)
+            XCTAssertEqual(try SignatureDocument(data: applied.data).html, "<b>Hello Ž</b>")
+            XCTAssertTrue(applied.metadata.isLocked)
+            try writer.restore(record, to: applied)
+            let restored = try FileSnapshot(url: original.url)
+            XCTAssertEqual(restored.data, loaded.data)
+            XCTAssertEqual(restored.metadata.acl, loaded.metadata.acl)
+            XCTAssertEqual(restored.metadata.isLocked, locked)
+        }
+    }
+
+    func testBackupDoesNotAcquireDestinationFolderACL() throws {
+        let (_, original, backups) = try fixture()
+        try FileManager.default.createDirectory(at: backups.directory, withIntermediateDirectories: true)
+        try addFixtureACL(at: backups.directory, permissions: "read,readattr,readextattr,readsecurity,file_inherit,directory_inherit")
+        let record = try backups.create(from: original, reason: "Test")
+        XCTAssertEqual(try backups.verify(record).metadata.acl, original.metadata.acl)
+        try original.requireUnchanged()
+    }
+
+    func testInheritedACLSurvivesRollback() throws {
+        let (_, original, backups) = try fixture()
+        try addFixtureACL(at: original.url, permissions: "read,readattr,readsecurity,inherited")
+        try setFlags(UInt32(UF_IMMUTABLE), at: original.url)
+        let loaded = try FileSnapshot(url: original.url)
+        var writer = SignatureWriter(backups: backups, requireMailClosed: {})
+        writer.checkpoint = { if $0 == .replaced { throw EasySignError("Injected failure") } }
+        XCTAssertThrowsError(try writer.apply(html: "new", to: loaded)) { error in
+            XCTAssertTrue(error.localizedDescription.contains("Rollback succeeded"))
+        }
+        let restored = try FileSnapshot(url: original.url)
+        XCTAssertEqual(restored.data, loaded.data)
+        XCTAssertEqual(restored.metadata.acl, loaded.metadata.acl)
+        XCTAssertTrue(restored.metadata.isLocked)
+        XCTAssertEqual(try backups.list().count, 1)
+    }
+
     func testRealMailStyleHeadersAndUnicodeRoundTrip() throws {
         let html = "<!doctype html><html><head><style>@media(max-width:400px){td{font-family:'Inter';}}</style></head><body><table><tr><td>Žofia 日本 👋</td></tr></table><a href='https://example.invalid'>Link</a><img src='https://example.invalid/a.png'></body></html>"
         for newline in ["\n", "\r\n"] {
