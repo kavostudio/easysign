@@ -6,6 +6,15 @@
         <description>Signed EasySign updates for macOS.</description>
         <language>en</language>
         <item>
+            <title>0.1.5</title>
+            <pubDate>Tue, 13 Oct 2026 12:03:46 +0200</pubDate>
+            <sparkle:version>7</sparkle:version>
+            <sparkle:shortVersionString>0.1.5</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Consistent EasySign branding throughout the app.</p><ul><li>A crisp vector logo in the menu bar that adapts to light, dark, and selected states.</li><li>The original full-color logo in the menu panel, welcome screen, and onboarding.</li></ul><p>Includes the setup checks and expanded Recent drafts from 0.1.4. This remains a preview release.</p>]]></description>
+            <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.5/EasySign-0.1.5.dmg" length="3950971" type="application/octet-stream" sparkle:edSignature="YHZBUSOY/CKzHk8unzQ52Dh/R4DmGdG/xXZ+sWu5tFhYUAVsQWw+ghH33tPsIIxqdNRU04pNP+e07TJlEZEgBQ=="/>
+        </item>
+        <item>
             <title>0.1.4</title>
             <pubDate>Tue, 13 Oct 2026 11:23:41 +0200</pubDate>
             <sparkle:version>6</sparkle:version>
@@ -28,18 +37,6 @@
 <p>This diagnostic release retains the inherited-permissions fix from 0.1.2. It does not claim to resolve every backup mismatch.</p>
 ]]></description>
             <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.3/EasySign-0.1.3.dmg" length="3772444" type="application/octet-stream" sparkle:edSignature="Nd2EzCif9fO8l6OEKMUxFqH23ON6oIJB8t0wc/vS688ii7vkDsRZ6B8Idx3CsDIyeOYPCkvOygYPtyGgVPCSCA=="/>
-        </item>
-        <item>
-            <title>0.1.2</title>
-            <pubDate>Tue, 13 Oct 2026 10:19:19 +0200</pubDate>
-            <sparkle:version>4</sparkle:version>
-            <sparkle:shortVersionString>0.1.2</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>Fixes a backup verification failure when applying HTML signatures with inherited file permissions.</p>
-<ul><li>Preserves original access rules in backups and installed signatures.</li><li>Keeps verification, file locking, and rollback protections intact.</li></ul>
-<p>This remains a preview release.</p>
-]]></description>
-            <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.2/EasySign-0.1.2.dmg" length="3769907" type="application/octet-stream" sparkle:edSignature="Cd2JgaC/uxZ6MxriwAVtOAxT6BEjqFl5P7yMv9SQ76gMuZzbcpzLlyu7LWW6KyG3Zz6uBa4AVPKTpPfnlhIAAg=="/>
         </item>
     </channel>
 </rss>
