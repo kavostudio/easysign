@@ -36,8 +36,12 @@ struct EasySignApp: App {
                     .keyboardShortcut("s").disabled(model.showingProfiles || model.selected == nil || model.busy || model.mailRunning)
             }
         }
-        MenuBarExtra("EasySign", systemImage: "signature") {
+        MenuBarExtra {
             ProfileMenu(model: profiles, checkForUpdates: updates.checkForUpdates, canCheckForUpdates: updates.canCheckForUpdates && !model.busy)
+        } label: {
+            Image("EasySignMark").renderingMode(.template)
+                .resizable().scaledToFit().frame(width: 18, height: 18)
+                .accessibilityLabel("EasySign")
         }.menuBarExtraStyle(.window)
     }
 }

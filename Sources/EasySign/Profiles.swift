@@ -304,7 +304,7 @@ struct ProfileMenu: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 8) {
-                Image(systemName: "signature").foregroundStyle(.secondary)
+                Image("EasySignLogo").resizable().scaledToFit().frame(width: 28, height: 28).accessibilityHidden(true)
                 Text("EasySign").font(.headline)
                 Spacer()
                 Button("Open EasySign", systemImage: "macwindow") { showMainWindow() }

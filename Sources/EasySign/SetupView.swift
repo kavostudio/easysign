@@ -21,8 +21,8 @@ struct SetupView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             HStack {
-                Image(systemName: step == .signatures ? "signature" : "person.crop.circle")
-                    .font(.system(size: 28)).foregroundStyle(.tint).accessibilityHidden(true)
+                Image("EasySignLogo").resizable().scaledToFit()
+                    .frame(width: 40, height: 40).accessibilityHidden(true)
                 Spacer()
                 Text(step == .signatures ? "1 of 2" : "2 of 2")
                     .font(.caption).foregroundStyle(.secondary)

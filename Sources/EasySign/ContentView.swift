@@ -376,10 +376,8 @@ struct ContentView: View {
         VStack(spacing: 0) {
             Spacer()
             VStack(alignment: .leading, spacing: 23) {
-                Image(systemName: "signature").font(.system(size: 35, weight: .light))
-                    .foregroundStyle(UtilityStyle.accent)
-                    .frame(width: 70, height: 70)
-                    .background(UtilityStyle.accent.opacity(0.08), in: RoundedRectangle(cornerRadius: 18))
+                Image("EasySignLogo").resizable().scaledToFit()
+                    .frame(width: 70, height: 70).accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 10) {
                     Text(model.accessDenied ? "Connect your Mail signatures" : (model.entries.isEmpty ? "Your signature,\nready for Mail." : "Choose a signature"))
                         .font(.system(size: 28, weight: .semibold)).tracking(-0.65)
