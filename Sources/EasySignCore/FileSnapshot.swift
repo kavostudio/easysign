@@ -61,12 +61,24 @@ public struct FileMetadata: Codable, Equatable, Sendable {
     }
 
     func equivalentPermissions(to other: Self, flags expectedFlags: UInt32, excludingQuarantine: Bool = false) -> Bool {
+        permissionDifferences(to: other, flags: expectedFlags, excludingQuarantine: excludingQuarantine).isEmpty
+    }
+
+    // Only category names are exposed; never include attribute values or account identifiers.
+    func permissionDifferences(to other: Self, flags expectedFlags: UInt32, excludingQuarantine: Bool = false) -> [String] {
         var expectedAttributes = extendedAttributes
         if excludingQuarantine { expectedAttributes.removeValue(forKey: "com.apple.quarantine") }
-        return mode == other.mode && owner == other.owner && group == other.group &&
-        other.flags == expectedFlags && expectedAttributes == other.extendedAttributes && acl == other.acl &&
-        createdSeconds == other.createdSeconds && createdNanos == other.createdNanos
+        var differences: [String] = []
+        if mode != other.mode { differences.append("permissions") }
+        if owner != other.owner { differences.append("file owner") }
+        if group != other.group { differences.append("file group") }
+        if other.flags != expectedFlags { differences.append("file flags") }
+        if expectedAttributes != other.extendedAttributes { differences.append("extended attributes") }
+        if acl != other.acl { differences.append("access rules") }
+        if createdSeconds != other.createdSeconds || createdNanos != other.createdNanos { differences.append("creation date") }
+        return differences
     }
+
 }
 
 public struct FileSnapshot: Sendable {

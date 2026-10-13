@@ -84,6 +84,47 @@ final class EasySignCoreTests: XCTestCase {
         XCTAssertEqual(try backups.list().count, 1)
     }
 
+    func testBackupVerificationReportsPermissionMismatchWithoutPersonalData() throws {
+        let (_, original, backups) = try fixture()
+        let record = try backups.create(from: original, reason: "Test")
+        XCTAssertEqual(chmod(backups.payload(for: record).path, 0o600), 0)
+        XCTAssertThrowsError(try backups.verify(record)) { error in
+            XCTAssertEqual(error.localizedDescription, "Backup verification failed (permissions). Nothing was changed.")
+        }
+        try original.requireUnchanged()
+    }
+
+    func testMetadataDiagnosticsOnlyExposeCategories() throws {
+        let (_, original, _) = try fixture()
+        var object = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(original.metadata)) as? [String: Any])
+        object["mode"] = 0
+        object["owner"] = original.metadata.owner &+ 1
+        object["group"] = original.metadata.group &+ 1
+        object["flags"] = UInt32(UF_IMMUTABLE)
+        object["extendedAttributes"] = ["private.attribute": Data("private value".utf8).base64EncodedString()]
+        object["acl"] = "private access rule"
+        object["createdSeconds"] = original.metadata.createdSeconds + 1
+        let changed = try JSONDecoder().decode(FileMetadata.self, from: JSONSerialization.data(withJSONObject: object))
+        XCTAssertEqual(original.metadata.permissionDifferences(to: changed, flags: original.metadata.flags),
+                       ["permissions", "file owner", "file group", "file flags", "extended attributes", "access rules", "creation date"])
+        XCTAssertFalse(original.metadata.equivalentPermissions(to: changed, flags: original.metadata.flags))
+        XCTAssertTrue(original.metadata.permissionDifferences(to: original.metadata, flags: original.metadata.flags).isEmpty)
+    }
+
+    func testBackupWithDifferentSourceGroup() throws {
+        let (_, original, backups) = try fixture()
+        let count = getgroups(0, nil)
+        var groups = [gid_t](repeating: 0, count: Int(count))
+        XCTAssertEqual(getgroups(count, &groups), count)
+        guard let group = groups.first(where: { $0 != original.metadata.group }) else {
+            throw XCTSkip("No supplementary group available")
+        }
+        XCTAssertEqual(chown(original.url.path, uid_t.max, group), 0)
+        let loaded = try FileSnapshot(url: original.url)
+        let record = try backups.create(from: loaded, reason: "Test")
+        XCTAssertEqual(try backups.verify(record).metadata.group, group)
+    }
+
     func testRealMailStyleHeadersAndUnicodeRoundTrip() throws {
         let html = "<!doctype html><html><head><style>@media(max-width:400px){td{font-family:'Inter';}}</style></head><body><table><tr><td>Žofia 日本 👋</td></tr></table><a href='https://example.invalid'>Link</a><img src='https://example.invalid/a.png'></body></html>"
         for newline in ["\n", "\r\n"] {

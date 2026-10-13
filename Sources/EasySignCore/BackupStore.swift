@@ -28,11 +28,13 @@ public struct BackupStore: Sendable {
 
     public func verify(_ record: BackupRecord) throws -> FileSnapshot {
         let snapshot = try FileSnapshot(url: payload(for: record))
-        guard snapshot.digest == record.digest,
-              snapshot.metadata.modifiedSeconds == record.metadata.modifiedSeconds,
-              snapshot.metadata.modifiedNanos == record.metadata.modifiedNanos,
-              record.metadata.equivalentPermissions(to: snapshot.metadata, flags: record.metadata.flags & ~UInt32(UF_IMMUTABLE)) else {
-            throw EasySignError("Backup contents or metadata failed verification. Nothing was changed.")
+        var differences = record.metadata.permissionDifferences(to: snapshot.metadata, flags: record.metadata.flags & ~UInt32(UF_IMMUTABLE))
+        if snapshot.digest != record.digest { differences.insert("file contents", at: 0) }
+        if snapshot.metadata.modifiedSeconds != record.metadata.modifiedSeconds || snapshot.metadata.modifiedNanos != record.metadata.modifiedNanos {
+            differences.append("modification date")
+        }
+        guard differences.isEmpty else {
+            throw EasySignError("Backup verification failed (\(differences.joined(separator: ", "))). Nothing was changed.")
         }
         return snapshot
     }
@@ -49,9 +51,10 @@ public struct BackupStore: Sendable {
             try copyCompleteFile(from: snapshot.url, to: content)
             try setFlags(snapshot.metadata.flags & ~UInt32(UF_IMMUTABLE), at: content)
             let copied = try FileSnapshot(url: content)
-            guard copied.data == snapshot.data,
-                  snapshot.metadata.equivalentPermissions(to: copied.metadata, flags: copied.metadata.flags) else {
-                throw EasySignError("The backup copy did not match the original.")
+            var differences = snapshot.metadata.permissionDifferences(to: copied.metadata, flags: snapshot.metadata.flags & ~UInt32(UF_IMMUTABLE))
+            if copied.data != snapshot.data { differences.insert("file contents", at: 0) }
+            guard differences.isEmpty else {
+                throw EasySignError("The backup copy did not match the original (\(differences.joined(separator: ", "))). The signature was not changed.")
             }
             try snapshot.requireUnchanged()
             try JSONEncoder().encode(record).write(to: pending.appendingPathComponent("record.json"), options: .atomic)
