@@ -6,6 +6,15 @@
         <description>Signed EasySign updates for macOS.</description>
         <language>en</language>
         <item>
+            <title>0.1.6</title>
+            <pubDate>Tue, 13 Oct 2026 13:17:54 +0200</pubDate>
+            <sparkle:version>8</sparkle:version>
+            <sparkle:shortVersionString>0.1.6</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Fixes the oversized menu-bar logo introduced in 0.1.5.</p><p>The vector asset now has an explicit 18-point native size and uses the standard menu-bar image initializer.</p>]]></description>
+            <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.6/EasySign-0.1.6.dmg" length="3892912" type="application/octet-stream" sparkle:edSignature="pHP+aRzWBXvP0QZbjXZeNVacmlLRkYwO294NKCx/agXumuo1GFPOqr9b0Yer6cgkfIwSyhSbvjoJ+zACcZbbDQ=="/>
+        </item>
+        <item>
             <title>0.1.5</title>
             <pubDate>Tue, 13 Oct 2026 12:03:46 +0200</pubDate>
             <sparkle:version>7</sparkle:version>
@@ -25,18 +34,6 @@
 <p>Setup checks are read-only. Backup creation and installation are still verified separately during Apply. This remains a preview release.</p>
 ]]></description>
             <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.4/EasySign-0.1.4.dmg" length="3840757" type="application/octet-stream" sparkle:edSignature="geoIysHBYfMkLZ+ik3KgGgiZJZqB+jecY1UMHQ4g2GJnBfAPtRH8cGXCO8QbUZHppxKbybM939yUMNfteN/NDg=="/>
-        </item>
-        <item>
-            <title>0.1.3</title>
-            <pubDate>Tue, 13 Oct 2026 10:30:12 +0200</pubDate>
-            <sparkle:version>5</sparkle:version>
-            <sparkle:shortVersionString>0.1.3</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>Backup errors now identify the mismatching category, such as access rules, extended attributes, creation date, or file contents.</p>
-<p>No signature contents, attribute values, or account identifiers are included in these diagnostics. Backup verification remains mandatory; failed verification stops before changing the signature.</p>
-<p>This diagnostic release retains the inherited-permissions fix from 0.1.2. It does not claim to resolve every backup mismatch.</p>
-]]></description>
-            <enclosure url="https://github.com/kavostudio/easysign/releases/download/v0.1.3/EasySign-0.1.3.dmg" length="3772444" type="application/octet-stream" sparkle:edSignature="Nd2EzCif9fO8l6OEKMUxFqH23ON6oIJB8t0wc/vS688ii7vkDsRZ6B8Idx3CsDIyeOYPCkvOygYPtyGgVPCSCA=="/>
         </item>
     </channel>
 </rss>
